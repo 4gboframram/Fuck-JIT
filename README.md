@@ -56,3 +56,5 @@ OPTIONS:
 If you are reading this, I just want to say that LLVM is a pain in the ass to use as a dependency and that you should not use it unless you absolutely need it. 
 
 Also don't judge me for using replit. It is my only option for working on projects while at school
+
+Also sorry for the many commits... I was figuring out how workflows worked.
