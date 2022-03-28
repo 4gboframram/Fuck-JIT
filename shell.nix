@@ -16,10 +16,7 @@ stdenv.mkDerivation rec {
         pkgs.glib 
         pkgs.libxml2.dev 
     ];
-    shellHook = ''
-    rustup set profile minimal
-    rustup toolchain install stable
-    '';
+
     LLVM_SYS_130_PREFIX = pkgs.llvmPackages_13.llvm.dev;
     
 }

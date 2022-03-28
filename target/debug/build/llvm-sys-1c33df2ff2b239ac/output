@@ -1,0 +1,207 @@
+cargo:rerun-if-env-changed=LLVM_SYS_130_PREFIX
+cargo:rerun-if-env-changed=LLVM_SYS_130_IGNORE_BLOCKLIST
+cargo:rerun-if-env-changed=LLVM_SYS_130_STRICT_VERSIONING
+cargo:rerun-if-env-changed=LLVM_SYS_130_NO_CLEAN_CFLAGS
+cargo:rerun-if-env-changed=LLVM_SYS_130_USE_DEBUG_MSVCRT
+cargo:rerun-if-env-changed=LLVM_SYS_130_FFI_WORKAROUND
+TARGET = Some("x86_64-unknown-linux-gnu")
+OPT_LEVEL = Some("0")
+HOST = Some("x86_64-unknown-linux-gnu")
+CC_x86_64-unknown-linux-gnu = None
+CC_x86_64_unknown_linux_gnu = None
+HOST_CC = None
+CC = Some("gcc")
+CFLAGS_x86_64-unknown-linux-gnu = None
+CFLAGS_x86_64_unknown_linux_gnu = None
+HOST_CFLAGS = None
+CFLAGS = Some("-I/nix/store/q0hkk4v3b5k3ivf93d9h2gag8khnpxsj-llvm-13.0.0-dev/include  -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS ")
+CRATE_CC_NO_DEFAULTS = None
+DEBUG = Some("true")
+CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+running: "gcc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I/nix/store/q0hkk4v3b5k3ivf93d9h2gag8khnpxsj-llvm-13.0.0-dev/include" "-D_GNU_SOURCE" "-D__STDC_CONSTANT_MACROS" "-D__STDC_FORMAT_MACROS" "-D__STDC_LIMIT_MACROS" "-o" "/home/runner/Brainfuck-JIT-2/target/debug/build/llvm-sys-1c33df2ff2b239ac/out/wrappers/target.o" "-c" "wrappers/target.c"
+cargo:warning=In file included from /nix/store/msy4nj4gscw9csc82labx0xvh7vqlfif-glibc-2.33-117-dev/include/inttypes.h:25,
+cargo:warning=                 from /nix/store/q0hkk4v3b5k3ivf93d9h2gag8khnpxsj-llvm-13.0.0-dev/include/llvm-c/DataTypes.h:27,
+cargo:warning=                 from /nix/store/q0hkk4v3b5k3ivf93d9h2gag8khnpxsj-llvm-13.0.0-dev/include/llvm-c/Types.h:17,
+cargo:warning=                 from /nix/store/q0hkk4v3b5k3ivf93d9h2gag8khnpxsj-llvm-13.0.0-dev/include/llvm-c/Target.h:23,
+cargo:warning=                 from wrappers/target.c:7:
+cargo:warning=/nix/store/msy4nj4gscw9csc82labx0xvh7vqlfif-glibc-2.33-117-dev/include/features.h:397:4: warning: #warning _FORTIFY_SOURCE requires compiling with optimization (-O) [-Wcpp]
+cargo:warning=  397 | #  warning _FORTIFY_SOURCE requires compiling with optimization (-O)
+cargo:warning=      |    ^~~~~~~
+exit status: 0
+AR_x86_64-unknown-linux-gnu = None
+AR_x86_64_unknown_linux_gnu = None
+HOST_AR = None
+AR = Some("ar")
+running: "ar" "cq" "/home/runner/Brainfuck-JIT-2/target/debug/build/llvm-sys-1c33df2ff2b239ac/out/libtargetwrappers.a" "/home/runner/Brainfuck-JIT-2/target/debug/build/llvm-sys-1c33df2ff2b239ac/out/wrappers/target.o"
+exit status: 0
+running: "ar" "s" "/home/runner/Brainfuck-JIT-2/target/debug/build/llvm-sys-1c33df2ff2b239ac/out/libtargetwrappers.a"
+exit status: 0
+cargo:rustc-link-lib=static=targetwrappers
+cargo:rustc-link-search=native=/home/runner/Brainfuck-JIT-2/target/debug/build/llvm-sys-1c33df2ff2b239ac/out
+cargo:config_path=/nix/store/q0hkk4v3b5k3ivf93d9h2gag8khnpxsj-llvm-13.0.0-dev/bin/llvm-config
+cargo:libdir=/nix/store/9439qfdrb6c3d8si7h5qn4v4zvfwhwc2-llvm-13.0.0-lib/lib
+
+cargo:rustc-link-search=native=/nix/store/9439qfdrb6c3d8si7h5qn4v4zvfwhwc2-llvm-13.0.0-lib/lib
+
+cargo:rustc-link-lib=static=LLVMWindowsManifest
+cargo:rustc-link-lib=static=LLVMXRay
+cargo:rustc-link-lib=static=LLVMLibDriver
+cargo:rustc-link-lib=static=LLVMDlltoolDriver
+cargo:rustc-link-lib=static=LLVMCoverage
+cargo:rustc-link-lib=static=LLVMLineEditor
+cargo:rustc-link-lib=static=LLVMXCoreDisassembler
+cargo:rustc-link-lib=static=LLVMXCoreCodeGen
+cargo:rustc-link-lib=static=LLVMXCoreDesc
+cargo:rustc-link-lib=static=LLVMXCoreInfo
+cargo:rustc-link-lib=static=LLVMX86Disassembler
+cargo:rustc-link-lib=static=LLVMX86AsmParser
+cargo:rustc-link-lib=static=LLVMX86CodeGen
+cargo:rustc-link-lib=static=LLVMX86Desc
+cargo:rustc-link-lib=static=LLVMX86Info
+cargo:rustc-link-lib=static=LLVMWebAssemblyDisassembler
+cargo:rustc-link-lib=static=LLVMWebAssemblyAsmParser
+cargo:rustc-link-lib=static=LLVMWebAssemblyCodeGen
+cargo:rustc-link-lib=static=LLVMWebAssemblyDesc
+cargo:rustc-link-lib=static=LLVMWebAssemblyUtils
+cargo:rustc-link-lib=static=LLVMWebAssemblyInfo
+cargo:rustc-link-lib=static=LLVMSystemZDisassembler
+cargo:rustc-link-lib=static=LLVMSystemZAsmParser
+cargo:rustc-link-lib=static=LLVMSystemZCodeGen
+cargo:rustc-link-lib=static=LLVMSystemZDesc
+cargo:rustc-link-lib=static=LLVMSystemZInfo
+cargo:rustc-link-lib=static=LLVMSparcDisassembler
+cargo:rustc-link-lib=static=LLVMSparcAsmParser
+cargo:rustc-link-lib=static=LLVMSparcCodeGen
+cargo:rustc-link-lib=static=LLVMSparcDesc
+cargo:rustc-link-lib=static=LLVMSparcInfo
+cargo:rustc-link-lib=static=LLVMRISCVDisassembler
+cargo:rustc-link-lib=static=LLVMRISCVAsmParser
+cargo:rustc-link-lib=static=LLVMRISCVCodeGen
+cargo:rustc-link-lib=static=LLVMRISCVDesc
+cargo:rustc-link-lib=static=LLVMRISCVInfo
+cargo:rustc-link-lib=static=LLVMPowerPCDisassembler
+cargo:rustc-link-lib=static=LLVMPowerPCAsmParser
+cargo:rustc-link-lib=static=LLVMPowerPCCodeGen
+cargo:rustc-link-lib=static=LLVMPowerPCDesc
+cargo:rustc-link-lib=static=LLVMPowerPCInfo
+cargo:rustc-link-lib=static=LLVMNVPTXCodeGen
+cargo:rustc-link-lib=static=LLVMNVPTXDesc
+cargo:rustc-link-lib=static=LLVMNVPTXInfo
+cargo:rustc-link-lib=static=LLVMMSP430Disassembler
+cargo:rustc-link-lib=static=LLVMMSP430AsmParser
+cargo:rustc-link-lib=static=LLVMMSP430CodeGen
+cargo:rustc-link-lib=static=LLVMMSP430Desc
+cargo:rustc-link-lib=static=LLVMMSP430Info
+cargo:rustc-link-lib=static=LLVMMipsDisassembler
+cargo:rustc-link-lib=static=LLVMMipsAsmParser
+cargo:rustc-link-lib=static=LLVMMipsCodeGen
+cargo:rustc-link-lib=static=LLVMMipsDesc
+cargo:rustc-link-lib=static=LLVMMipsInfo
+cargo:rustc-link-lib=static=LLVMLanaiDisassembler
+cargo:rustc-link-lib=static=LLVMLanaiCodeGen
+cargo:rustc-link-lib=static=LLVMLanaiAsmParser
+cargo:rustc-link-lib=static=LLVMLanaiDesc
+cargo:rustc-link-lib=static=LLVMLanaiInfo
+cargo:rustc-link-lib=static=LLVMHexagonDisassembler
+cargo:rustc-link-lib=static=LLVMHexagonCodeGen
+cargo:rustc-link-lib=static=LLVMHexagonAsmParser
+cargo:rustc-link-lib=static=LLVMHexagonDesc
+cargo:rustc-link-lib=static=LLVMHexagonInfo
+cargo:rustc-link-lib=static=LLVMBPFDisassembler
+cargo:rustc-link-lib=static=LLVMBPFAsmParser
+cargo:rustc-link-lib=static=LLVMBPFCodeGen
+cargo:rustc-link-lib=static=LLVMBPFDesc
+cargo:rustc-link-lib=static=LLVMBPFInfo
+cargo:rustc-link-lib=static=LLVMAVRDisassembler
+cargo:rustc-link-lib=static=LLVMAVRAsmParser
+cargo:rustc-link-lib=static=LLVMAVRCodeGen
+cargo:rustc-link-lib=static=LLVMAVRDesc
+cargo:rustc-link-lib=static=LLVMAVRInfo
+cargo:rustc-link-lib=static=LLVMARMDisassembler
+cargo:rustc-link-lib=static=LLVMARMAsmParser
+cargo:rustc-link-lib=static=LLVMARMCodeGen
+cargo:rustc-link-lib=static=LLVMARMDesc
+cargo:rustc-link-lib=static=LLVMARMUtils
+cargo:rustc-link-lib=static=LLVMARMInfo
+cargo:rustc-link-lib=static=LLVMAMDGPUDisassembler
+cargo:rustc-link-lib=static=LLVMAMDGPUAsmParser
+cargo:rustc-link-lib=static=LLVMAMDGPUCodeGen
+cargo:rustc-link-lib=static=LLVMAMDGPUDesc
+cargo:rustc-link-lib=static=LLVMAMDGPUUtils
+cargo:rustc-link-lib=static=LLVMAMDGPUInfo
+cargo:rustc-link-lib=static=LLVMAArch64Disassembler
+cargo:rustc-link-lib=static=LLVMAArch64AsmParser
+cargo:rustc-link-lib=static=LLVMAArch64CodeGen
+cargo:rustc-link-lib=static=LLVMAArch64Desc
+cargo:rustc-link-lib=static=LLVMAArch64Utils
+cargo:rustc-link-lib=static=LLVMAArch64Info
+cargo:rustc-link-lib=static=LLVMOrcJIT
+cargo:rustc-link-lib=static=LLVMMCJIT
+cargo:rustc-link-lib=static=LLVMJITLink
+cargo:rustc-link-lib=static=LLVMInterpreter
+cargo:rustc-link-lib=static=LLVMExecutionEngine
+cargo:rustc-link-lib=static=LLVMRuntimeDyld
+cargo:rustc-link-lib=static=LLVMOrcTargetProcess
+cargo:rustc-link-lib=static=LLVMOrcShared
+cargo:rustc-link-lib=static=LLVMDWP
+cargo:rustc-link-lib=static=LLVMSymbolize
+cargo:rustc-link-lib=static=LLVMDebugInfoPDB
+cargo:rustc-link-lib=static=LLVMDebugInfoGSYM
+cargo:rustc-link-lib=static=LLVMOption
+cargo:rustc-link-lib=static=LLVMObjectYAML
+cargo:rustc-link-lib=static=LLVMMCA
+cargo:rustc-link-lib=static=LLVMMCDisassembler
+cargo:rustc-link-lib=static=LLVMLTO
+cargo:rustc-link-lib=static=LLVMPasses
+cargo:rustc-link-lib=static=LLVMCFGuard
+cargo:rustc-link-lib=static=LLVMCoroutines
+cargo:rustc-link-lib=static=LLVMObjCARCOpts
+cargo:rustc-link-lib=static=LLVMipo
+cargo:rustc-link-lib=static=LLVMVectorize
+cargo:rustc-link-lib=static=LLVMLinker
+cargo:rustc-link-lib=static=LLVMInstrumentation
+cargo:rustc-link-lib=static=LLVMFrontendOpenMP
+cargo:rustc-link-lib=static=LLVMFrontendOpenACC
+cargo:rustc-link-lib=static=LLVMExtensions
+cargo:rustc-link-lib=static=LLVMDWARFLinker
+cargo:rustc-link-lib=static=LLVMGlobalISel
+cargo:rustc-link-lib=static=LLVMMIRParser
+cargo:rustc-link-lib=static=LLVMAsmPrinter
+cargo:rustc-link-lib=static=LLVMDebugInfoMSF
+cargo:rustc-link-lib=static=LLVMDebugInfoDWARF
+cargo:rustc-link-lib=static=LLVMSelectionDAG
+cargo:rustc-link-lib=static=LLVMCodeGen
+cargo:rustc-link-lib=static=LLVMIRReader
+cargo:rustc-link-lib=static=LLVMAsmParser
+cargo:rustc-link-lib=static=LLVMInterfaceStub
+cargo:rustc-link-lib=static=LLVMFileCheck
+cargo:rustc-link-lib=static=LLVMFuzzMutate
+cargo:rustc-link-lib=static=LLVMTarget
+cargo:rustc-link-lib=static=LLVMScalarOpts
+cargo:rustc-link-lib=static=LLVMInstCombine
+cargo:rustc-link-lib=static=LLVMAggressiveInstCombine
+cargo:rustc-link-lib=static=LLVMTransformUtils
+cargo:rustc-link-lib=static=LLVMBitWriter
+cargo:rustc-link-lib=static=LLVMAnalysis
+cargo:rustc-link-lib=static=LLVMProfileData
+cargo:rustc-link-lib=static=LLVMObject
+cargo:rustc-link-lib=static=LLVMTextAPI
+cargo:rustc-link-lib=static=LLVMMCParser
+cargo:rustc-link-lib=static=LLVMMC
+cargo:rustc-link-lib=static=LLVMDebugInfoCodeView
+cargo:rustc-link-lib=static=LLVMBitReader
+cargo:rustc-link-lib=static=LLVMCore
+cargo:rustc-link-lib=static=LLVMRemarks
+cargo:rustc-link-lib=static=LLVMBitstreamReader
+cargo:rustc-link-lib=static=LLVMBinaryFormat
+cargo:rustc-link-lib=static=LLVMTableGen
+cargo:rustc-link-lib=static=LLVMSupport
+cargo:rustc-link-lib=static=LLVMDemangle
+cargo:rustc-link-lib=dylib=rt
+cargo:rustc-link-lib=dylib=dl
+cargo:rustc-link-lib=dylib=pthread
+cargo:rustc-link-lib=dylib=m
+cargo:rustc-link-lib=dylib=z
+cargo:rustc-link-lib=dylib=tinfo
+cargo:rustc-link-lib=dylib=xml2
+cargo:rustc-link-lib=dylib=stdc++
