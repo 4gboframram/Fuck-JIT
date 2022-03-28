@@ -1,0 +1,17 @@
+[package]
+name = "fuck-jit"
+version = "0.1.0"
+authors = ["runner"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[dependencies]
+inkwell = { git = "https://github.com/TheDan64/inkwell", branch = "master", features = ["llvm13-0"] }
+itertools = "0.10.3"
+clap = { version = "3.1.6", features = ["derive"] }
+
+[build-dependencies]
+# cc = { version = "1.0", features = ["parallel"] }
+# cxx-build = "1.0"
