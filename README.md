@@ -1,4 +1,5 @@
 # Fuck-Jit - An LLVM Brainfuck JIT using inkwell
+[![Rust](https://github.com/4gboframram/Fuck-JIT/actions/workflows/rust.yml/badge.svg)](https://github.com/4gboframram/Fuck-JIT/actions/workflows/rust.yml)
 This was a little LLVM brainfuck JIT that I made to start learning LLVM and to get used to Rust
 
 `fuck-jit` can do Just-in-time or static compilation of brainfuck code. It can also generate a readable assembly file.
