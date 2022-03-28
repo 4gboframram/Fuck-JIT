@@ -1,4 +1,3 @@
-
 use inkwell::basic_block::BasicBlock;
 use inkwell::builder::Builder;
 use inkwell::context::Context;
@@ -11,7 +10,6 @@ use itertools::Itertools;
 use std::error::Error;
 use std::path::Path;
 type MainJitType = unsafe extern "C" fn(*mut u8);
-
 
 #[derive(Debug)]
 pub struct CodeGen<'ctx> {
@@ -37,7 +35,8 @@ pub struct Loop<'ctx> {
 impl<'ctx> CodeGen<'ctx> {
     pub fn new_jit(context: &'ctx Context) -> Result<CodeGen<'ctx>, Box<dyn Error>> {
         let module = context.create_module("bf");
-        let execution_engine = Some(module.create_jit_execution_engine(OptimizationLevel::Aggressive)?);
+        let execution_engine =
+            Some(module.create_jit_execution_engine(OptimizationLevel::Aggressive)?);
         let main_t = context.void_type().fn_type(
             &[context.i8_type().ptr_type(AddressSpace::Generic).into()],
             false,
@@ -74,7 +73,13 @@ impl<'ctx> CodeGen<'ctx> {
 
     pub fn finalize_jit(&self) -> Option<JitFunction<MainJitType>> {
         self.builder.build_return(None);
-        unsafe { self.execution_engine.as_ref().unwrap().get_function("main").ok() }
+        unsafe {
+            self.execution_engine
+                .as_ref()
+                .unwrap()
+                .get_function("main")
+                .ok()
+        }
     }
 
     fn get_ptr(&self) -> PointerValue<'ctx> {
@@ -181,16 +186,15 @@ impl<'ctx> CodeGen<'ctx> {
                 ',' => self.emit_getchar(),
                 _ => {}
             });
-        
     }
 
-    pub fn new_comp(context: &'ctx Context, tape_length: usize) -> Result<CodeGen<'ctx>, Box<dyn Error>> {
+    pub fn new_comp(
+        context: &'ctx Context,
+        tape_length: usize,
+    ) -> Result<CodeGen<'ctx>, Box<dyn Error>> {
         let module = context.create_module("bf");
-        // let execution_engine = module.create_jit_execution_engine(OptimizationLevel::Aggressive)?; 
-        let main_t = context.i32_type().fn_type(
-            &[],
-            false,
-        );
+        // let execution_engine = module.create_jit_execution_engine(OptimizationLevel::Aggressive)?;
+        let main_t = context.i32_type().fn_type(&[], false);
         let main = module.add_function("main", main_t, Some(Linkage::External));
 
         let i32_type = context.i32_type();
@@ -199,18 +203,20 @@ impl<'ctx> CodeGen<'ctx> {
         let putchar_fn_type = i32_type.fn_type(&[i32_type.into()], false);
         let putchar_fn = module.add_function("putchar", putchar_fn_type, Some(Linkage::External));
 
-        
         let entry_block = context.append_basic_block(main, "entry");
         let arr_type = context.i8_type().array_type(tape_length as u32);
-        
+
         let builder = context.create_builder();
         builder.position_at_end(entry_block);
 
         let arr_ptr = builder.build_alloca(arr_type, "tape_ptr");
         builder.build_store(arr_ptr, arr_type.const_zero());
-        let tape_ptr = builder.build_bitcast(arr_ptr, context.i8_type().ptr_type(AddressSpace::Generic), "tape_ptr");
-        
-        
+        let tape_ptr = builder.build_bitcast(
+            arr_ptr,
+            context.i8_type().ptr_type(AddressSpace::Generic),
+            "tape_ptr",
+        );
+
         let tape_ptr_ptr = builder.build_alloca(tape_ptr.get_type(), "tape_ptr_ptr");
         builder.build_store(tape_ptr_ptr, tape_ptr);
 
@@ -229,7 +235,8 @@ impl<'ctx> CodeGen<'ctx> {
     }
 
     pub fn finalize_comp(&self) {
-        self.builder.build_return(Some(&self.context.i32_type().const_zero()));
+        self.builder
+            .build_return(Some(&self.context.i32_type().const_zero()));
     }
 }
 
@@ -285,8 +292,7 @@ pub fn jit_bf(code: &str, tape_length: usize, print_ir: bool) -> Result<(), Box<
         }
         unsafe { func.call(arr[..].as_mut_ptr()) };
     };
-    
-    
+
     Ok(())
 }
 
@@ -294,10 +300,16 @@ use inkwell::targets::{
     CodeModel, FileType, InitializationConfig, RelocMode, Target, TargetMachine,
 };
 
-pub fn compile_bf(code: &str, tape_length: usize, outfile: &Path, asm: bool, print_ir: bool) -> Result<(), Box<dyn Error>> {
+pub fn compile_bf(
+    code: &str,
+    tape_length: usize,
+    outfile: &Path,
+    asm: bool,
+    print_ir: bool,
+) -> Result<(), Box<dyn Error>> {
     let context = Context::create();
     let mut codegen = CodeGen::new_comp(&context, tape_length)?;
-    
+
     Target::initialize_all(&InitializationConfig::default());
     // use the host machine as the compilation target
     let target_triple = TargetMachine::get_default_triple();
@@ -319,16 +331,19 @@ pub fn compile_bf(code: &str, tape_length: usize, outfile: &Path, asm: bool, pri
         )
         .ok_or_else(|| "Unable to create target machine!".to_string())?;
 
+    let filetype = if asm {
+        FileType::Assembly
+    } else {
+        FileType::Object
+    };
 
-    let filetype = if asm {FileType::Assembly} else {FileType::Object};
-    
     codegen.bf_codegen(code);
     codegen.finalize_comp();
 
     if print_ir {
         codegen.main.print_to_stderr();
     }
-    
+
     target_machine
         .write_to_file(&codegen.module, filetype, outfile)
         .map_err(|e| format!("{:?}", e))?;
